@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: BSD-3-Clause
 
 FROM ubuntu:24.04
-COPY third-party-programs.txt /
+# COPY third-party-programs.txt /
 RUN apt-get update && apt-get upgrade -y && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
     curl ca-certificates gpg-agent software-properties-common && \
@@ -24,7 +24,9 @@ RUN apt-get update && apt-get upgrade -y && \
     ca-certificates build-essential pkg-config gnupg libarchive13 openssh-server openssh-client wget net-tools git cmake intel-basekit intel-opencl-icd intel-level-zero-gpu level-zero level-zero-dev intel-hpckit vim && \
     rm -rf /var/lib/apt/lists/*
 
-
+RUN apt-get update && apt-get upgrade -y && \
+    apt-get install -y --no-install-recommends apt-utils make rsync patch &&\
+    rm -rf /var/lib/apt/lists/*
 
 
 ENV LANG=C.UTF-8
@@ -72,5 +74,5 @@ ENV VTUNE_PROFILER_2024_DIR='/opt/intel/oneapi/vtune/2024.1'
 ENV VTUNE_PROFILER_DIR='/opt/intel/oneapi/vtune/2024.1'
 
 WORKDIR /working
-COPY ./vasp.6.2.1 ./
+COPY ./vasp.6.2.1.tar ./
 
